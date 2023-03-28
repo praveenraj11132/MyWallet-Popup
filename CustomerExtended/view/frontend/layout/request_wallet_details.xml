@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <css src="Wheelpros_CustomerExtended::css/wallet.css" />
+        <link src='Wheelpros_CustomerExtended::js/walletjs.js'/>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">My Wallet</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block name="customer.wallet.details" template="Wheelpros_CustomerExtended::wallet/details.phtml" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,51 @@
+<?php
+/**
+ * @var History $block
+ */
+
+use Wheelpros\CustomerExtended\Block\Order\History;
+
+$customerOrders = $block->getCustomerOrders();
+?>
+
+<?php if (!empty($customerOrders)): ?>
+    <div class="table-wrapper customer-orders-history">
+        <table class="data table table-order-items order-history">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?= $block->escapeHtml(__('Order #')) ?></th>
+                    <th scope="col" class="col date"><?= $block->escapeHtml(__('Order Ref')) ?></th>
+                    <th scope="col" class="col total"><?= $block->escapeHtml(__('PO Number')) ?></th>
+                    <th scope="col" class="col status"><?= $block->escapeHtml(__('Order Date')) ?></th>
+                    <th scope="col" class="col actions"><?= $block->escapeHtml(__('Amount')) ?></th>
+                    <th scope="col" class="col actions"><?= $block->escapeHtml(__('Status')) ?></th>
+                    <th scope="col" class="col actions"><?= $block->escapeHtml(__('Actions')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($customerOrders as $order) : ?>
+                    <tr>
+                        <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" class="col id"><?= $block->escapeHtml($order['ccrz__OrderNumber__c']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Order Ref')) ?>" class="col ref"><?= $block->escapeHtml($order['Order_Reference_Number__c']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('PO Number')) ?>" class="col po"><?= $block->escapeHtml($order['WP_PONumber__c']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Order Date')) ?>" class="col date"><?= $block->escapeHtml($order['CreatedDate']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Amount')) ?>" class="col amount"><?= $block->escapeHtml($order['ccrz__TotalAmount__c']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?= $block->escapeHtml($order['ccrz__OrderStatus__c']) ?></td>
+                        <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                            <a href="#" data-post='<?= /* @noEscape */
+                            $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                                ->getPostData($block->getReorderUrl($order))
+                            ?>' class="action order">
+                                <span><?= $block->escapeHtml(__('Reorder')) ?></span>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+<?php endif ?>
+
